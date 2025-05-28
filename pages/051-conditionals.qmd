@@ -1,0 +1,236 @@
+---
+title: Conditional if
+---
+
+Conditional `if` statements allow programs to make decisions and execute different code based on whether certain conditions are `True` or `False`. For instance, we may want to perform a different action when a study participant is an adult or not:
+
+```
+IF (participant_age >= 18)
+    DO SOMETHING
+OTHERWISE
+    DO SOMETHING ELSE
+```
+
+The basic syntax for conditional statements is `if condition:`, where `condition` is an expression that evaluates to either `True` or `False`, i.e. a boolean. If it's `True`, the indented code block under the if statement will run. If `False`, it will be skipped. For example, the below code will print "You are an adult" if age is 18 or higher.
+```{python}
+age = 18
+if age >= 18:
+    print("You are an adult")
+```
+
+You can also add an `else` clause to specify code to run if the condition is `False`:
+
+```{python}
+age = 17
+if age >= 18:
+    print("You are an adult")
+else:
+    print("You are not an adult")
+```
+
+For multiple conditions, you can use `elif` (else if) clauses to execute the first matching block.
+
+```{python}
+age = 14
+if age < 13:
+    print("You are a child") 
+elif age < 18:
+    print("You are a teenager")
+else:
+    print("You are an adult")
+```
+
+
+::: {#keypoints .callout-tip icon=false title='`if` statement syntax'}
+
+An `if` statement has scaffolding as well as user-supplied parts. The scafolding is the word `if` and the colon `:` as shown below.
+<pre>
+ ↓                ↓
+<b style="color:darkred">if</b> my_number > 100<b style="color:darkred">:</b>
+    print(my_number, "is large")
+</pre>
+
+The user-supplied part is the conditional:
+<pre>
+          ↓
+if <b style="color:darkred">my_number > 100</b>:
+    print(my_number, "is large")
+</pre>
+
+As before, the body must be indented by four spaces:
+<pre>
+if my_number > 100<b style="color:darkred">:</b>
+    print(my_number, "is large")
+  ↑
+<i style="color:gray">indentation</i>
+</pre>
+
+You can chain multiple conditions with `elif` using the same syntax. On the contrary, `else` provides a default case if no conditions are `True` and do not requiere a condition.
+
+:::
+
+
+::: {#exercise1 .callout-note title="Exercise" icon=false} 
+
+To explore the behaviour of the `if` statement, we could edit the below code to change the value of `my_number` via an `input` function call. **The `input` function will always return a string, even if you enter digits so we need to explicitly convert the input into an integer with the [`int`](https://docs.python.org/3/library/functions.html#int) function**.
+
+```{.python}
+my_number = int(input("Enter a number: "))  # We can nest function calls directly
+
+if my_number > 100:
+    print(my_number, "is large")
+```
+
+Run the program with different inputs. Does it give you what you expect? What happens if the input is smaller than 100?
+:::
+
+::: {#answer1 .callout-caution icon=false title='Answer' collapse="true"}
+```{.python}
+# We can nest function calls directly
+my_number = int(input("Enter a number: "))  
+
+if my_number > 100:
+    print(my_number, "is large")
+```
+
+If `my_number` is smaller than 100 then the expression is false and so `if` does not trigger and nothing is printed:
+
+```{python}
+#| echo: false
+my_number = 42
+
+print("Enter a number: ", my_number)
+
+if my_number > 100:
+    print(my_number, "is large")
+```
+
+```{python}
+#| echo: false
+my_number = 128
+
+print("Enter a number: ", my_number)
+
+if my_number > 100:
+    print(my_number, "is large")
+```
+:::
+
+
+
+::: {#exercise2 .callout-note title="Exercise 2" icon=false} 
+
+Experiment with editing `if.py` to use some different boolean statements. Make sure you remember to save the file after each change before running it.
+
+:::
+::: {#answer2 .callout-caution icon=false title='Answer' collapse="true"}
+
+**Less than:**
+
+```{python}
+#| eval: false
+my_number = int(input("Enter a number: ")) 
+
+if my_number < 100:
+    print(my_number, "is less than 100")
+```
+
+```{python}
+#| echo: false
+my_number = 74 
+
+print("Enter a number: ", my_number)
+
+if my_number < 100:
+    print(my_number, "is less than 100")
+```
+
+<br/>
+
+**Equal to:**
+
+```{python}
+#| eval: false
+#| filename: if.py
+
+my_number = int(input("Enter a number: "))  
+
+if my_number == 100:
+    print(my_number, "== 100")
+if my_number == 74:
+    print(my_number, "== 74")
+```
+
+```{python}
+#| echo: false
+my_number = 74 
+
+print("Enter a number: ", my_number)
+
+if my_number == 100:
+    print(my_number, "== 100")
+if my_number == 74:
+    print(my_number, "== 74")
+```
+
+
+<br/>
+
+**Not equal to:**
+```{python}
+#| eval: false
+#| filename: if.py
+
+my_number = int(input("Enter a number: ")) 
+
+if my_number != 100:
+    print(my_number, "!= 100")
+if my_number != 74:
+    print(my_number, "!= 74")
+```
+
+```{python}
+#| echo: false
+my_number = 74
+
+print("Enter a number: ", my_number)
+
+if my_number != 100:
+    print(my_number, "!= 100")
+if my_number != 74:
+    print(my_number, "!= 74")
+```
+:::
+
+
+## Ordering your options
+
+When working out which lines of code will be run, Python will work down the list of `if`, `elif`s and `else` and will run the *first one* that matches. Once it's matched one, it will not bother checking to see if any of those later on would have matched. This means that you should order your questions from most-specific to least-specific.
+
+For example, if you want to do one thing for positive numbers, but something special instead for numbers greater than 100, then you should put the more specific check first:
+
+```{python}
+#| filename: if.py
+#| eval: false
+my_number = int(input("Enter a number: "))
+
+if my_number > 100:
+    print(my_number, "is large")
+elif my_number > 1:
+    print(my_number, "is positive")
+else:
+    print(my_number, "negative")
+```
+
+
+## Combining questions
+
+It is possible to ask two or more questions in one go by combining them with `and` and `or`. So, if you want to check is a number is smaller than ten (`my_number < 10`) and is not equal to zero (`my_number != 0`), you can use:
+
+```{.python}
+if my_number < 10 and my_number != 0:
+    ...
+```
+
+These combined checks can be used in both `if` and `elif` statements.
+
